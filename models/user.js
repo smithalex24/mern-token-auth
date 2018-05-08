@@ -25,9 +25,9 @@ var userSchema = new mongoose.Schema({
 
 // Override 'toJSON' to prevent the password from being returned with the user
 userSchema.set('toJSON', {
-  transform: function(doc, ret, options) {
+  transform: function(doc, user, options) {
     var returnJson = {
-      id: ret._id,
+      id: user._id,
       email: user.email,
       name: user.name
     };
@@ -36,14 +36,9 @@ userSchema.set('toJSON', {
 });
 
 userSchema.methods.authenticated = function(password, callback) {
-  bcrypt.compare(password, this.password, function(err, res) {
-    if (err) {
-      callback(err);
-    } else {
-      callback(null, res ? this : false);
-    }
-  });
+  return bcrypt.compareSync(password, this.password);
 }
+  
 
 // Mongoose's version of a beforeCreate hook
 userSchema.pre('save', function(next) {
