@@ -8,7 +8,7 @@ var path = require('path');
 var app = express();
 
 // Mongoose connect
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/MERN', {useMongoClient: true});
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/mernauth', {useMongoClient: true});
 
 // Set up middleware
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -27,7 +27,7 @@ app.use(function(req, res, next) {
 app.use('/auth', require('./routes/auth'));
 
 app.get('*', function(req, res, next) {
-	res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+	res.sendFile(path.resolve(__dirname, 'client', 'public', 'index.html'));
 });
 
 module.exports = app;

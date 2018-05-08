@@ -18,7 +18,7 @@ var userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    minlength: 8,
+    minlength: 6,
     maxlength: 99
   }
 });
@@ -28,8 +28,8 @@ userSchema.set('toJSON', {
   transform: function(doc, ret, options) {
     var returnJson = {
       id: ret._id,
-      email: ret.email,
-      name: ret.name
+      email: user.email,
+      name: user.name
     };
     return returnJson;
   }
